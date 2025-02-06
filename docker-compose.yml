@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  vika-service:
+    container_name: "tacticul"
+    image: tacticul:0.0.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      service-db:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://service-db:5432/tacticul
+      DB_USER: postgres
+      DB_PASSWORD: 12345
+      DDL_AUTO: update
+
+  service-db:
+    container_name: "service-db"
+    image: postgres:14.7-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: tacticul
+      PGUSER: postgres
+      LANG: en_US.UTF-8
+      LANGUAGE: en_US:en
+      LC_ALL: en_US.UTF-8
+      command: >
+        sh -c "apt-get update && apt-get install -y locales && locale-gen en_US.UTF-8 && update-locale LANG=en_US.UTF-8 && docker-entrypoint.sh postgres"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-d", "tacticul" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    ports:
+      - "15432:5432"
+    volumes:
+      - tacticul-service-db:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  tacticul-service-db:
