@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MediaDTO {
-    private Integer id;
+    private Long id;
     private String url;
 }

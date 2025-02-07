@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ContactDTO {
-    private Integer id;
+    private Long id;
     private String name;
     private String description;
     private MediaDTO logo;
