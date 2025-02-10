@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
+import ru.spb.tacticul.dto.UserCreateDTO;
 import ru.spb.tacticul.dto.UserDTO;
 import ru.spb.tacticul.model.User;
 
@@ -33,5 +34,18 @@ class UserMapperTest {
         assertEquals(userDTO.id(), user.getId());
         assertEquals(userDTO.login(), user.getLogin());
         assertEquals(userDTO.email(), user.getEmail());
+    }
+
+    @Test
+    void testUserCreateDTOToUser() {
+        UserCreateDTO userCreateDTO = new UserCreateDTO("newUser", "new@example.com", "password");
+
+        User user = userMapper.userCreateDTOToUser(userCreateDTO);
+
+        assertNotNull(user);
+        assertNull(user.getId());
+        assertEquals(userCreateDTO.login(), user.getLogin());
+        assertEquals(userCreateDTO.email(), user.getEmail());
+        assertEquals(userCreateDTO.password(), user.getPassword());
     }
 }
