@@ -13,8 +13,13 @@ class UserMapperTest {
     private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
     @Test
-    void testUserToUserDTO() {
-        User user = new User(1L, "testUser", "test@example.com", "password");
+    void shouldMapUserToUserDTO() {
+        User user = User.builder()
+                .id(1L)
+                .login("testUser")
+                .email("test@example.com")
+                .password("password123")
+                .build();
 
         UserDTO userDTO = userMapper.userToUserDTO(user);
 
@@ -25,8 +30,12 @@ class UserMapperTest {
     }
 
     @Test
-    void testUserDTOToUser() {
-        UserDTO userDTO = new UserDTO(1L, "testUser", "test@example.com");
+    void shouldMapUserDTOToUser() {
+        UserDTO userDTO = UserDTO.builder()
+                .id(1L)
+                .login("testUser")
+                .email("test@example.com")
+                .build();
 
         User user = userMapper.userDTOToUser(userDTO);
 
@@ -37,13 +46,17 @@ class UserMapperTest {
     }
 
     @Test
-    void testUserCreateDTOToUser() {
-        UserCreateDTO userCreateDTO = new UserCreateDTO("newUser", "new@example.com", "password");
+    void shouldMapUserCreateDTOToUser() {
+        UserCreateDTO userCreateDTO = UserCreateDTO.builder()
+                .login("newUser")
+                .email("new@example.com")
+                .password("securePass123")
+                .build();
 
         User user = userMapper.userCreateDTOToUser(userCreateDTO);
 
         assertNotNull(user);
-        assertNull(user.getId());
+        assertNull(user.getId()); // id должен игнорироваться
         assertEquals(userCreateDTO.login(), user.getLogin());
         assertEquals(userCreateDTO.email(), user.getEmail());
         assertEquals(userCreateDTO.password(), user.getPassword());

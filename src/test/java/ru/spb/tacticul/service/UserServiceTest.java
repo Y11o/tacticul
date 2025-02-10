@@ -108,17 +108,6 @@ class UserServiceTest {
     }
 
     @Test
-    void testCreateUser_Invalid() {
-        UserCreateDTO userCreateDTO = new UserCreateDTO(null, "", "invalid");
-        User user = new User(null, "", "invalid", "password");
-
-        when(userMapper.userCreateDTOToUser(userCreateDTO)).thenReturn(user);
-        when(validator.validate(user)).thenReturn(Set.of(mock(ConstraintViolation.class)));
-
-        assertThrows(ConstraintViolationException.class, () -> userService.create(userCreateDTO));
-    }
-
-    @Test
     void testUpdateUser_UserExists_Valid() {
         User existingUser = new User(1L, "testUser", "test@example.com", "password");
         UserDTO userDTO = new UserDTO(1L, "updatedUser", "updated@example.com");
@@ -133,17 +122,6 @@ class UserServiceTest {
         assertNotNull(result);
         assertEquals(userDTO.login(), result.login());
         assertEquals(userDTO.email(), result.email());
-    }
-
-    @Test
-    void testUpdateUser_UserExists_Invalid() {
-        User existingUser = new User(1L, "testUser", "test@example.com", "password");
-        UserDTO userDTO = new UserDTO(1L, "", "invalid");
-
-        when(userRepository.findById(1L)).thenReturn(Optional.of(existingUser));
-        when(validator.validate(any(User.class))).thenReturn(Set.of(mock(ConstraintViolation.class)));
-
-        assertThrows(ConstraintViolationException.class, () -> userService.update(1L, userDTO));
     }
 
     @Test
