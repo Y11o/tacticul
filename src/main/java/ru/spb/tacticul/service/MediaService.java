@@ -60,7 +60,7 @@ public class MediaService {
             dir.mkdirs();
         }
 
-        Path filePath = dirPath.resolve(file.getName());
+        Path filePath = dirPath.resolve(file.getOriginalFilename());
         try (InputStream inputStream = file.getInputStream();
              OutputStream outputStream = Files.newOutputStream(filePath)) {
             byte[] buffer = new byte[PHOTO_MAX_SIZE];
