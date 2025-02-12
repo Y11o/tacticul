@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,18 +40,21 @@ public class ContactController {
     }
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Создать новый контакт")
     public ResponseEntity<ContactDTO> create(@Valid @RequestBody ContactDTO contactDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(contactService.create(contactDTO));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Обновить контакт по ID")
     public ResponseEntity<ContactDTO> update(@PathVariable Long id, @Valid @RequestBody ContactDTO contactDTO) {
         return ResponseEntity.ok(contactService.update(id, contactDTO));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Удалить контакт по ID")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         contactService.delete(id);
