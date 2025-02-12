@@ -40,21 +40,18 @@ public class ContactController {
     }
 
     @PostMapping
-    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Создать новый контакт")
     public ResponseEntity<ContactDTO> create(@Valid @RequestBody ContactDTO contactDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(contactService.create(contactDTO));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Обновить контакт по ID")
     public ResponseEntity<ContactDTO> update(@PathVariable Long id, @Valid @RequestBody ContactDTO contactDTO) {
         return ResponseEntity.ok(contactService.update(id, contactDTO));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Удалить контакт по ID")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         contactService.delete(id);

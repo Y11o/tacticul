@@ -22,7 +22,6 @@ import ru.spb.tacticul.service.UserService;
 import java.util.List;
 
 @RestController
-@PreAuthorize("isAuthenticated()")
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 @Tag(name = "Пользователи", description = "API для управления пользователями")

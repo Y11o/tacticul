@@ -40,21 +40,18 @@ public class PartnerController {
     }
 
     @PostMapping
-    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Создать нового партнера")
     public ResponseEntity<PartnerDTO> create(@Valid @RequestBody PartnerDTO partnerDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(partnerService.create(partnerDTO));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Обновить партнера по ID")
     public ResponseEntity<PartnerDTO> update(@PathVariable Long id, @Valid @RequestBody PartnerDTO partnerDTO) {
         return ResponseEntity.ok(partnerService.update(id, partnerDTO));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Удалить партнера по ID")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         partnerService.delete(id);

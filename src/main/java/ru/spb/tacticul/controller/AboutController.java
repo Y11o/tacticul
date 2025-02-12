@@ -40,21 +40,18 @@ public class AboutController {
     }
 
     @PostMapping
-    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Создать новую запись 'О нас'")
     public ResponseEntity<AboutDTO> create(@Valid @RequestBody AboutDTO aboutDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(aboutService.create(aboutDTO));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Обновить запись 'О нас' по ID")
     public ResponseEntity<AboutDTO> update(@PathVariable Long id, @Valid @RequestBody AboutDTO aboutDTO) {
         return ResponseEntity.ok(aboutService.update(id, aboutDTO));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Удалить запись 'О нас' по ID")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         aboutService.delete(id);

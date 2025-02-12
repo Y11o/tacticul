@@ -40,21 +40,18 @@ public class SocialMediaController {
     }
 
     @PostMapping
-    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Создать новую социальную сеть")
     public ResponseEntity<SocialMediaDTO> create(@Valid @RequestBody SocialMediaDTO socialMediaDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(socialMediaService.create(socialMediaDTO));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Обновить социальную сеть по ID")
     public ResponseEntity<SocialMediaDTO> update(@PathVariable Long id, @Valid @RequestBody SocialMediaDTO socialMediaDTO) {
         return ResponseEntity.ok(socialMediaService.update(id, socialMediaDTO));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Удалить социальную сеть по ID")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         socialMediaService.delete(id);
