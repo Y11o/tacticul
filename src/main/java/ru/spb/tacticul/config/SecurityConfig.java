@@ -3,6 +3,7 @@ package ru.spb.tacticul.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -21,6 +22,7 @@ import ru.spb.tacticul.service.CustomUserDetailsService;
 import java.util.List;
 
 @Configuration
+@EnableScheduling
 @RequiredArgsConstructor
 public class SecurityConfig {
 

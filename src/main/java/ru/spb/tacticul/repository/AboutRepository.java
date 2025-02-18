@@ -4,5 +4,11 @@ import org.springframework.stereotype.Repository;
 import ru.spb.tacticul.model.About;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 @Repository
-public interface AboutRepository extends JpaRepository<About, Long> {}
+public interface AboutRepository extends JpaRepository<About, Long> {
+
+    Optional<About> findByLogo_Id(Long logoId);
+
+}
