@@ -22,6 +22,7 @@ public record AlbumDTO(
 
         @NotNull(message = "Фотография на задний план обязательна")
         MediaDTO background,
+
         String url
 ) {
 }

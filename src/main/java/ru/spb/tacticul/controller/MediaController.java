@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,10 @@ public class MediaController {
 
     private final MediaService mediaService;
 
-    @PostMapping("/save")
+    @RequestMapping(
+            path = "/save",
+            method = RequestMethod.POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Сохранить изображение")
     public ResponseEntity<MediaDTO> saveImage(@RequestParam("file") MultipartFile file){
         return ResponseEntity.status(HttpStatus.CREATED).body(mediaService.save(file));

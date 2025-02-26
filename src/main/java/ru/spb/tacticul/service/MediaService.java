@@ -155,7 +155,6 @@ public class MediaService {
                 .filter(media -> partnerRepository.findByLogo_Id(media.getId()).isEmpty())
                 .filter(media -> socialMediaRepository.findByLogo_Id(media.getId()).isEmpty())
                 .collect(Collectors.toList());
-        log.info(String.valueOf(medias.size()));
         medias.forEach(
                media -> mediaRepository.deleteById(media.getId())
         );
