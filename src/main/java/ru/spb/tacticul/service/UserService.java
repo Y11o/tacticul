@@ -2,12 +2,9 @@ package ru.spb.tacticul.service;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.spb.tacticul.dto.UserCreateDTO;
 import ru.spb.tacticul.dto.UserDTO;
 import ru.spb.tacticul.exception.ResourceNotFoundException;
 import ru.spb.tacticul.mapper.UserMapper;
-import ru.spb.tacticul.model.User;
 import ru.spb.tacticul.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +18,6 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final BCryptPasswordEncoder passwordEncoder;
 
     public List<UserDTO> getAll() {
         log.info("Получение всех записей 'Пользователь'");
@@ -35,23 +31,6 @@ public class UserService {
         return userRepository.findById(id)
                 .map(userMapper::userToUserDTO)
                 .orElseThrow(() -> new ResourceNotFoundException("Пользователь", id));
-    }
-
-    @Transactional
-    public UserDTO create(UserCreateDTO userCreateDTO) {
-        log.info("Создание нового пользователя: {}", userCreateDTO.login());
-
-        if (userRepository.findByLogin(userCreateDTO.login()).isPresent()) {
-            throw new IllegalArgumentException("Пользователь с таким логином уже существует");
-        }
-
-        User user = userMapper.userCreateDTOToUser(userCreateDTO);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        user = userRepository.save(user);
-        log.info("Пользователь {} успешно создан", user.getLogin());
-
-        return userMapper.userToUserDTO(user);
     }
 
     @Transactional
@@ -83,4 +62,3 @@ public class UserService {
         log.info("Пользователь с ID {} удалён", id);
     }
 }
-
