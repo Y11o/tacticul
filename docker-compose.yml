@@ -16,6 +16,14 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DDL_AUTO: ${DDL_AUTO}
+      ACTIVE_PROFILE: ${ACTIVE_PROFILE}
+      INIT_ADMIN_LOGIN: ${INIT_ADMIN_LOGIN}
+      INIT_ADMIN_PASSWORD: ${INIT_ADMIN_PASSWORD}
+      INIT_ADMIN_EMAIL: ${INIT_ADMIN_EMAIL}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXP: ${JWT_EXP}
+      SERVER_IP: ${SERVER_IP}
+      SERVER_PORT: ${SERVER_PORT}
 
   service-db:
     container_name: "service-db"
