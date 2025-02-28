@@ -16,7 +16,7 @@ import ru.spb.tacticul.service.MediaService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/media")
+@RequestMapping("/media")
 @RequiredArgsConstructor
 @Tag(name = "Фото", description = "API для управления фото")
 public class MediaController {

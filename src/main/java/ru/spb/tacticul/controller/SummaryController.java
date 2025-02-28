@@ -13,7 +13,7 @@ import ru.spb.tacticul.service.SummaryService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/summary")
+@RequestMapping("/summary")
 @Tag(name = "Общее", description = "Вывод всей информации")
 public class SummaryController {
 

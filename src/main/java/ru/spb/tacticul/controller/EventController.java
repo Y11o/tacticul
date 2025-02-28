@@ -13,7 +13,7 @@ import ru.spb.tacticul.service.EventService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/event")
+@RequestMapping("/event")
 @RequiredArgsConstructor
 @Tag(name = "Событие", description = "API для управления событиями")
 public class EventController {

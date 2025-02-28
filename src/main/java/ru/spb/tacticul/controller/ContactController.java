@@ -20,7 +20,7 @@ import ru.spb.tacticul.service.ContactService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/contact")
+@RequestMapping("/contact")
 @RequiredArgsConstructor
 @Tag(name = "Контакты", description = "API для управления контактами")
 public class ContactController {

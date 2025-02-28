@@ -20,7 +20,7 @@ import ru.spb.tacticul.service.AboutService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/about")
+@RequestMapping("/about")
 @RequiredArgsConstructor
 @Tag(name = "О нас", description = "API для управления разделом 'О нас'")
 public class AboutController {

@@ -18,7 +18,7 @@ import ru.spb.tacticul.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 @Tag(name = "Пользователи", description = "API для управления пользователями")
 public class UserController {

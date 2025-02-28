@@ -20,7 +20,7 @@ import ru.spb.tacticul.service.PartnerService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/partner")
+@RequestMapping("/partner")
 @RequiredArgsConstructor
 @Tag(name = "Партнеры", description = "API для управления партнерами")
 public class PartnerController {

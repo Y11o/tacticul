@@ -13,7 +13,7 @@ import ru.spb.tacticul.service.AlbumService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/album")
+@RequestMapping("/album")
 @RequiredArgsConstructor
 @Tag(name = "Альбом", description = "API для управления альбомами")
 public class AlbumController {

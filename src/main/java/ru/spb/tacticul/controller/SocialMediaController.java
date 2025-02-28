@@ -20,7 +20,7 @@ import ru.spb.tacticul.service.SocialMediaService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/social-media")
+@RequestMapping("/social-media")
 @RequiredArgsConstructor
 @Tag(name = "Социальные сети", description = "API для управления социальными сетями")
 public class SocialMediaController {
