@@ -23,8 +23,8 @@ public class JwtUtil {
     private final JwtParser jwtParser;
 
     public JwtUtil(
-            @Value("${jwt.secret}") String secret,
-            @Value("${jwt.expiration}") long jwtExpirationMs
+            @Value("${app.jwt.secret}") String secret,
+            @Value("${app.jwt.expiration}") long jwtExpirationMs
     ) {
         this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         this.jwtExpirationMs = jwtExpirationMs;

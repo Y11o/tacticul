@@ -51,10 +51,10 @@ public class MediaService {
     @Value("${upload_dir}")
     private String UPLOAD_DIR;
 
-    @Value("${dev_ip}")
+    @Value("${app.dev_ip}")
     private String IP;
 
-    @Value("${dev_port}")
+    @Value("${app.dev_port}")
     private String PORT;
 
     public void saveImage(MultipartFile file){

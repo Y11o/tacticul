@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  vika-service:
+  tacticul-service:
     container_name: "tacticul"
     image: tacticul:0.0.1
     build:
@@ -12,19 +12,19 @@ services:
       service-db:
         condition: service_healthy
     environment:
-      DB_URL: jdbc:postgresql://service-db:5432/tacticul
-      DB_USER: postgres
-      DB_PASSWORD: 12345
-      DDL_AUTO: update
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DDL_AUTO: ${DDL_AUTO}
 
   service-db:
     container_name: "service-db"
     image: postgres:14.7-alpine
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: tacticul
-      PGUSER: postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGUSER: ${PGUSER}
       LANG: en_US.UTF-8
       LANGUAGE: en_US:en
       LC_ALL: en_US.UTF-8
