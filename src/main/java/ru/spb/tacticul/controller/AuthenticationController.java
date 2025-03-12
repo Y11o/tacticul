@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.spb.tacticul.dto.authentication.RecoveryRequest;
 import ru.spb.tacticul.dto.authentication.SignInRequest;
 import ru.spb.tacticul.dto.authentication.SignUpRequest;
 import ru.spb.tacticul.dto.authentication.TokenResponse;
@@ -35,5 +36,12 @@ public class AuthenticationController {
     @Operation(summary = "Вход в систему")
     public ResponseEntity<TokenResponse> signIn(@Valid @RequestBody SignInRequest request) {
         return ResponseEntity.ok(authenticationService.signIn(request));
+    }
+
+    @PostMapping("/recovery")
+    @Operation(summary = "Восстановление пароля")
+    public ResponseEntity<Void> recovery(@Valid @RequestBody RecoveryRequest request) {
+        authenticationService.recoveryPassword(request);
+        return ResponseEntity.ok().build();
     }
 }

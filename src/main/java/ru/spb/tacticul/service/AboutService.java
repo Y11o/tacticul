@@ -59,8 +59,17 @@ public class AboutService {
                     if (aboutDTO.description() != null && !aboutDTO.description().isEmpty()) {
                         existingAbout.setDescription(aboutDTO.description());
                     }
-                    if (aboutDTO.logo() != null) {
-                        existingAbout.setLogo(mediaMapper.mediaDTOToMedia(aboutDTO.logo()));
+                    if (aboutDTO.logoZh() != null) {
+                        existingAbout.setLogoZh(mediaMapper.mediaDTOToMedia(aboutDTO.logoZh()));
+                    }
+                    if (aboutDTO.logoEdc() != null) {
+                        existingAbout.setLogoEdc(mediaMapper.mediaDTOToMedia(aboutDTO.logoEdc()));
+                    }
+                    if (aboutDTO.logoDv() != null) {
+                        existingAbout.setLogoDv(mediaMapper.mediaDTOToMedia(aboutDTO.logoDv()));
+                    }
+                    if (aboutDTO.logoRus() != null) {
+                        existingAbout.setLogoRus(mediaMapper.mediaDTOToMedia(aboutDTO.logoRus()));
                     }
 
                     aboutRepository.save(existingAbout);

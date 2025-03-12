@@ -3,24 +3,34 @@ package ru.spb.tacticul.mapper;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import ru.spb.tacticul.dto.AboutDTO;
 import ru.spb.tacticul.dto.MediaDTO;
 import ru.spb.tacticul.model.About;
 import ru.spb.tacticul.model.Media;
 
+@SpringBootTest
 public class AboutMapperTest {
 
-    private final AboutMapper aboutMapper = Mappers.getMapper(AboutMapper.class);
+    @Autowired
+    private AboutMapper aboutMapper;
 
     @Test
     void testAboutToAboutDTO() {
-        Media media = Media.builder().id(1L).fileName("logo.png").build();
+        Media mediaZh = Media.builder().id(1L).fileName("logoZh.png").build();
+        Media mediaEdc = Media.builder().id(2L).fileName("logoEdc.png").build();
+        Media mediaDv = Media.builder().id(3L).fileName("logoDv.png").build();
+        Media mediaRus = Media.builder().id(4L).fileName("logoRus.png").build();
+
         About about = About.builder()
                 .id(1L)
                 .name("Test About")
                 .description("Test Description")
-                .logo(media)
+                .logoZh(mediaZh)
+                .logoEdc(mediaEdc)
+                .logoDv(mediaDv)
+                .logoRus(mediaRus)
                 .build();
 
         AboutDTO aboutDTO = aboutMapper.aboutToAboutDTO(about);
@@ -29,13 +39,20 @@ public class AboutMapperTest {
         assertEquals(about.getId(), aboutDTO.id());
         assertEquals(about.getName(), aboutDTO.name());
         assertEquals(about.getDescription(), aboutDTO.description());
-        assertNotNull(aboutDTO.logo());
+        assertNotNull(aboutDTO.logoZh());
+        assertNotNull(aboutDTO.logoEdc());
+        assertNotNull(aboutDTO.logoDv());
+        assertNotNull(aboutDTO.logoRus());
     }
 
     @Test
     void testAboutDTOToAbout() {
-        MediaDTO mediaDTO = new MediaDTO(1L, "logo.png");
-        AboutDTO aboutDTO = new AboutDTO(1L, "Test About", "Test Description", mediaDTO);
+        MediaDTO mediaDTOZh = new MediaDTO(1L, "logoZh.png");
+        MediaDTO mediaDTOEdc = new MediaDTO(2L, "logoEdc.png");
+        MediaDTO mediaDTODv = new MediaDTO(3L, "logoDv.png");
+        MediaDTO mediaDTORus = new MediaDTO(4L, "logoRus.png");
+
+        AboutDTO aboutDTO = new AboutDTO(1L, "Test About", "Test Description", mediaDTOZh, mediaDTOEdc, mediaDTODv, mediaDTORus);
 
         About about = aboutMapper.aboutDTOToAbout(aboutDTO);
 
@@ -43,7 +60,11 @@ public class AboutMapperTest {
         assertEquals(aboutDTO.id(), about.getId());
         assertEquals(aboutDTO.name(), about.getName());
         assertEquals(aboutDTO.description(), about.getDescription());
-        assertNotNull(about.getLogo());
+        assertNotNull(about.getLogoZh());
+        assertNotNull(about.getLogoEdc());
+        assertNotNull(about.getLogoDv());
+        assertNotNull(about.getLogoRus());
     }
 }
+
 
