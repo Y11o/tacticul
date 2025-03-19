@@ -14,13 +14,5 @@ public record AboutDTO(
         String name,
 
         @NotBlank(message = "Описание не должно быть пустым")
-        String description,
-
-        MediaDTO logoZh,
-
-        MediaDTO logoEdc,
-
-        MediaDTO logoDv,
-
-        MediaDTO logoRus) {
+        String description) {
 }

@@ -37,30 +37,36 @@ public class EventService {
     }
 
     @Transactional
-    public EventDTO create(EventDTO EventDTO) {
-        log.info("Создание нового события: {}", EventDTO.name());
-
-        Event event = eventMapper.eventDTOtoEvent(EventDTO);
+    public EventDTO create(EventDTO eventDTO) {
+        log.info("Создание нового события: {}", eventDTO.name());
+        Event event = eventMapper.eventDTOtoEvent(eventDTO);
         event = eventRepository.save(event);
-
         log.info("Событие с ID {} успешно создано", event.getId());
         return eventMapper.eventToEventDTO(event);
     }
 
     @Transactional
-    public EventDTO update(Long id, EventDTO EventDTO) {
+    public EventDTO update(Long id, EventDTO eventDTO) {
         log.info("Обновление события с ID: {}", id);
-
         return eventRepository.findById(id)
                 .map(existingEvent -> {
-                    if (EventDTO.name() != null && !EventDTO.name().isEmpty()) {
-                        existingEvent.setName(EventDTO.name());
+                    if (eventDTO.name() != null) {
+                        existingEvent.setName(eventDTO.name());
                     }
-                    if (EventDTO.description() != null && !EventDTO.description().isEmpty()) {
-                        existingEvent.setDescription(EventDTO.description());
+                    if (eventDTO.shortDescription() != null) {
+                        existingEvent.setShortDescription(eventDTO.shortDescription());
                     }
-                    if (EventDTO.logo() != null) {
-                        existingEvent.setLogo(mediaMapper.mediaDTOToMedia(EventDTO.logo()));
+                    if (eventDTO.longDescription() != null) {
+                        existingEvent.setLongDescription(eventDTO.longDescription());
+                    }
+                    if (eventDTO.logo() != null) {
+                        existingEvent.setLogo(mediaMapper.mediaDTOToMedia(eventDTO.logo()));
+                    }
+                    if (eventDTO.img() != null) {
+                        existingEvent.setImg(mediaMapper.mediaDTOToMedia(eventDTO.img()));
+                    }
+                    if (eventDTO.position() != null) {
+                        existingEvent.setPosition(eventDTO.position());
                     }
 
                     eventRepository.save(existingEvent);
@@ -77,6 +83,6 @@ public class EventService {
             throw new ResourceNotFoundException("Событие", id);
         }
         eventRepository.deleteById(id);
-        log.info("Событие с ID {} успешно удалён", id);
+        log.info("Событие с ID {} успешно удалено", id);
     }
 }

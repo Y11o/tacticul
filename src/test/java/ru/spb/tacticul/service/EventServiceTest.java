@@ -44,9 +44,12 @@ public class EventServiceTest {
         event = new Event();
         event.setId(1L);
         event.setName("Test Event");
-        event.setDescription("Test Description");
+        event.setShortDescription("Short Description");
+        event.setLongDescription("Long Description");
+        event.setPosition("center");
 
-        eventDTO = new EventDTO(1L, "Test Event", "Test Description", null);
+        eventDTO = new EventDTO(1L, "Test Event", "Short Description",
+                "Long Description", null, null, "center");
     }
 
     @Test

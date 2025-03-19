@@ -16,13 +16,22 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
+
+    @Column
+    private String shortDescription;
 
     @Lob
     @Column(columnDefinition = "TEXT")
-    private String description;
+    private String longDescription;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Media logo;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Media img;
+
+    @Column
+    private String position;
 }
