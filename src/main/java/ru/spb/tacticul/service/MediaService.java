@@ -147,7 +147,6 @@ public class MediaService {
     public void deleteUnusedImages(){
 
         List<Media> medias = mediaRepository.findAll().stream()
-                .filter(media -> aboutRepository.findByLogo_Id(media.getId()).isEmpty())
                 .filter(media -> albumRepository.findByLogo_Id(media.getId()).isEmpty())
                 .filter(media -> albumRepository.findByBackgroundImage_Id(media.getId()).isEmpty())
                 .filter(media -> contactRepository.findByLogo_Id(media.getId()).isEmpty())

@@ -8,7 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface AboutRepository extends JpaRepository<About, Long> {
-
-    Optional<About> findByLogo_Id(Long logoId);
-
 }

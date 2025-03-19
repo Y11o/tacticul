@@ -13,10 +13,16 @@ public record EventDTO(
         @Size(min = 3, max = 255, message = "Название должно содержать от 3 до 255 символов")
         String name,
 
+        @NotBlank(message = "Короткое описание не должно быть пустым")
+        String shortDescription,
+
         @NotBlank(message = "Описание не должно быть пустым")
-        String description,
+        String longDescription,
 
         @NotNull(message = "Логотип обязателен")
-        MediaDTO logo
-) {
-}
+        MediaDTO logo,
+
+        MediaDTO img,
+
+        String position
+) {}

@@ -59,9 +59,6 @@ public class AboutService {
                     if (aboutDTO.description() != null && !aboutDTO.description().isEmpty()) {
                         existingAbout.setDescription(aboutDTO.description());
                     }
-                    if (aboutDTO.logo() != null) {
-                        existingAbout.setLogo(mediaMapper.mediaDTOToMedia(aboutDTO.logo()));
-                    }
 
                     aboutRepository.save(existingAbout);
                     log.info("Запись 'О нас' с ID {} успешно обновлена", id);

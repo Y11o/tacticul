@@ -8,7 +8,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.spb.tacticul.dto.AboutDTO;
 import ru.spb.tacticul.exception.ResourceNotFoundException;
 import ru.spb.tacticul.mapper.AboutMapper;
-import ru.spb.tacticul.mapper.MediaMapper;
 import ru.spb.tacticul.model.About;
 import ru.spb.tacticul.repository.AboutRepository;
 
@@ -27,16 +26,13 @@ class AboutServiceTest {
     @Mock
     private AboutMapper aboutMapper;
 
-    @Mock
-    private MediaMapper mediaMapper;
-
     @InjectMocks
     private AboutService aboutService;
 
     @Test
     void getAll_ShouldReturnListOfAboutDTO() {
-        List<About> aboutList = List.of(new About(1L, "Test Name", "Test Description", null));
-        List<AboutDTO> aboutDTOList = List.of(new AboutDTO(1L, "Test Name", "Test Description", null));
+        List<About> aboutList = List.of(new About(1L, "Test Name", "Test Description"));
+        List<AboutDTO> aboutDTOList = List.of(new AboutDTO(1L, "Test Name", "Test Description"));
 
         when(aboutRepository.findAll()).thenReturn(aboutList);
         when(aboutMapper.aboutToAboutDTO(any())).thenReturn(aboutDTOList.get(0));
@@ -49,8 +45,8 @@ class AboutServiceTest {
 
     @Test
     void getById_ShouldReturnAboutDTO() {
-        About about = new About(1L, "Test Name", "Test Description", null);
-        AboutDTO aboutDTO = new AboutDTO(1L,"Test Name", "Test Description", null);
+        About about = new About(1L, "Test Name", "Test Description");
+        AboutDTO aboutDTO = new AboutDTO(1L,"Test Name", "Test Description");
 
         when(aboutRepository.findById(1L)).thenReturn(Optional.of(about));
         when(aboutMapper.aboutToAboutDTO(about)).thenReturn(aboutDTO);
@@ -71,8 +67,8 @@ class AboutServiceTest {
 
     @Test
     void create_ShouldSaveAndReturnAboutDTO() {
-        AboutDTO aboutDTO = new AboutDTO(1L,"Test Name", "Test Description", null);
-        About about = new About(1L, "Test Name", "Test Description", null);
+        AboutDTO aboutDTO = new AboutDTO(1L,"Test Name", "Test Description");
+        About about = new About(1L, "Test Name", "Test Description");
 
         when(aboutMapper.aboutDTOToAbout(aboutDTO)).thenReturn(about);
         when(aboutRepository.save(about)).thenReturn(about);
@@ -86,8 +82,8 @@ class AboutServiceTest {
 
     @Test
     void update_ShouldModifyAndReturnUpdatedAboutDTO() {
-        About about = new About(1L, "Old Name", "Old Description", null);
-        AboutDTO updatedDTO = new AboutDTO(1L,"New Name", "New Description", null);
+        About about = new About(1L, "Old Name", "Old Description");
+        AboutDTO updatedDTO = new AboutDTO(1L,"New Name", "New Description");
 
         when(aboutRepository.findById(1L)).thenReturn(Optional.of(about));
         when(aboutRepository.save(any(About.class))).thenReturn(about);
