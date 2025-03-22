@@ -9,9 +9,9 @@ public record SummaryDTO(
 
         List<AboutDTO> about,
 
-        List<EventDTO> events,
+        List<EventForSummaryDTO> events,
 
-        GalleryDTO gallery,
+        List<AlbumDTO> gallery,
 
         List<PartnerDTO> partners,
 
