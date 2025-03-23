@@ -24,6 +24,7 @@ services:
       JWT_EXP: ${JWT_EXP}
       SERVER_IP: ${SERVER_IP}
       SERVER_PORT: ${SERVER_PORT}
+      RECOVERY_MAIL: ${RECOVERY_MAIL}
 
   service-db:
     container_name: "service-db"
