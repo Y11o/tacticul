@@ -25,6 +25,7 @@ services:
       SERVER_IP: ${SERVER_IP}
       SERVER_PORT: ${SERVER_PORT}
       RECOVERY_MAIL: ${RECOVERY_MAIL}
+      RECOVERY_PASSWORD: ${RECOVERY_PASSWORD}
 
   service-db:
     container_name: "service-db"
