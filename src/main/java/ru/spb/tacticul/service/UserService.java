@@ -2,6 +2,7 @@ package ru.spb.tacticul.service;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.spb.tacticul.dto.UserDTO;
 import ru.spb.tacticul.exception.ResourceNotFoundException;
 import ru.spb.tacticul.mapper.UserMapper;
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public List<UserDTO> getAll() {
         log.info("Получение всех записей 'Пользователь'");
@@ -44,6 +47,9 @@ public class UserService {
                     }
                     if (userDTO.email() != null && !userDTO.email().isEmpty()) {
                         existingUser.setEmail(userDTO.email());
+                    }
+                    if (userDTO.password() != null && !userDTO.password().isEmpty()){
+                        existingUser.setPassword(passwordEncoder.encode(existingUser.getPassword()));
                     }
                     userRepository.save(existingUser);
                     log.info("Пользователь с ID {} обновлён", id);

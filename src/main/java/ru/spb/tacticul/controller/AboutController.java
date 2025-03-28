@@ -27,15 +27,9 @@ public class AboutController {
     private final AboutService aboutService;
 
     @GetMapping
-    @Operation(summary = "Получить все записи 'О нас'")
-    public ResponseEntity<List<AboutDTO>> getAll() {
+    @Operation(summary = "Получить запись 'О нас'")
+    public ResponseEntity<AboutDTO> getAll() {
         return ResponseEntity.ok(aboutService.getAll());
-    }
-
-    @GetMapping("/{id}")
-    @Operation(summary = "Получить запись 'О нас' по ID")
-    public ResponseEntity<AboutDTO> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(aboutService.getById(id));
     }
 
     @PostMapping
@@ -44,16 +38,16 @@ public class AboutController {
         return ResponseEntity.status(HttpStatus.CREATED).body(aboutService.create(aboutDTO));
     }
 
-    @PutMapping("/{id}")
-    @Operation(summary = "Обновить запись 'О нас' по ID")
-    public ResponseEntity<AboutDTO> update(@PathVariable Long id, @Valid @RequestBody AboutDTO aboutDTO) {
-        return ResponseEntity.ok(aboutService.update(id, aboutDTO));
+    @PutMapping
+    @Operation(summary = "Обновить запись 'О нас'")
+    public ResponseEntity<AboutDTO> update(@Valid @RequestBody AboutDTO aboutDTO) {
+        return ResponseEntity.ok(aboutService.update(aboutDTO));
     }
 
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Удалить запись 'О нас' по ID")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        aboutService.delete(id);
+    @DeleteMapping
+    @Operation(summary = "Удалить запись 'О нас'")
+    public ResponseEntity<Void> delete() {
+        aboutService.delete();
         return ResponseEntity.noContent().build();
     }
 }

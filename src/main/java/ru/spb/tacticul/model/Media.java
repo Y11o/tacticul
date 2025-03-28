@@ -17,5 +17,5 @@ public class Media {
     private Long id;
 
     @Column(name = "file_name")
-    private String fileName;
+    private String url;
 }

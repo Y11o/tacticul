@@ -11,6 +11,7 @@ import ru.spb.tacticul.model.InProgress;
 import ru.spb.tacticul.repository.InProgressRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,11 +21,16 @@ public class InProgressService {
     private final InProgressRepository inProgressRepository;
     private final InProgressMapper inProgressMapper;
 
-    public List<InProgressDTO> getAll() {
+    public InProgressDTO getAll() {
         log.info("Получение всех записей InProgress");
         return inProgressRepository.findAll().stream()
                 .map(inProgressMapper::inProgressToInProgressDTO)
-                .collect(Collectors.toList());
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Optional<InProgress> getInProgress(){
+        return inProgressRepository.findAll().stream().findFirst();
     }
 
     public InProgressDTO getById(Long id) {
@@ -38,15 +44,16 @@ public class InProgressService {
     public InProgressDTO create(InProgressDTO inProgressDTO) {
         log.info("Создание нового InProgress: {}", inProgressDTO);
         InProgress inProgress = inProgressMapper.inProgressDTOToInProgress(inProgressDTO);
+        inProgressRepository.deleteAll();
         inProgress = inProgressRepository.save(inProgress);
         log.info("InProgress с ID {} успешно создан", inProgress.getId());
         return inProgressMapper.inProgressToInProgressDTO(inProgress);
     }
 
     @Transactional
-    public InProgressDTO update(Long id, InProgressDTO inProgressDTO) {
-        log.info("Обновление InProgress с ID: {}", id);
-        return inProgressRepository.findById(id)
+    public InProgressDTO update(InProgressDTO inProgressDTO) {
+        log.info("Обновление InProgress");
+        return getInProgress()
                 .map(existing -> {
                     if (inProgressDTO.isAvailable() != null) {
                         existing.setIsAvailable(inProgressDTO.isAvailable());
@@ -55,19 +62,16 @@ public class InProgressService {
                         existing.setDescription(inProgressDTO.description());
                     }
                     inProgressRepository.save(existing);
-                    log.info("InProgress с ID {} успешно обновлен", id);
+                    log.info("InProgress успешно обновлен");
                     return inProgressMapper.inProgressToInProgressDTO(existing);
                 })
-                .orElseThrow(() -> new ResourceNotFoundException("InProgress", id));
+                .orElseThrow(() -> new ResourceNotFoundException("Не найден InProgress"));
     }
 
     @Transactional
-    public void delete(Long id) {
-        log.info("Удаление InProgress с ID: {}", id);
-        if (!inProgressRepository.existsById(id)) {
-            throw new ResourceNotFoundException("InProgress", id);
-        }
-        inProgressRepository.deleteById(id);
-        log.info("InProgress с ID {} успешно удален", id);
+    public void delete() {
+        log.info("Удаление InProgress");
+        inProgressRepository.deleteAll();
+        log.info("InProgress успешно удален");
     }
 }

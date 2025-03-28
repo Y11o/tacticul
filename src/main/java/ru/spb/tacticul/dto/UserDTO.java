@@ -16,5 +16,7 @@ public record UserDTO(
 
         @NotBlank(message = "Email не может быть пустым")
         @Email(message = "Некорректный формат email")
-        String email) {
+        String email,
+
+        String password) {
 }

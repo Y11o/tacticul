@@ -12,6 +12,7 @@ import ru.spb.tacticul.model.About;
 import ru.spb.tacticul.repository.AboutRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,11 +23,17 @@ public class AboutService {
     private final AboutMapper aboutMapper;
     private final MediaMapper mediaMapper;
 
-    public List<AboutDTO> getAll() {
+    public AboutDTO getAll() {
         log.info("Получение всех записей 'О нас'");
         return aboutRepository.findAll().stream()
                 .map(aboutMapper::aboutToAboutDTO)
-                .collect(Collectors.toList());
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Optional<About> getAbout() {
+        return aboutRepository.findAll().stream()
+                .findFirst();
     }
 
     public AboutDTO getById(Long id) {
@@ -41,17 +48,18 @@ public class AboutService {
         log.info("Создание новой записи 'О нас': {}", aboutDTO.name());
 
         About about = aboutMapper.aboutDTOToAbout(aboutDTO);
+        aboutRepository.deleteAll();
         about = aboutRepository.save(about);
 
-        log.info("Запись 'О нас' с ID {} успешно создана", about.getId());
+        log.info("Запись 'О нас' успешно создана");
         return aboutMapper.aboutToAboutDTO(about);
     }
 
     @Transactional
-    public AboutDTO update(Long id, AboutDTO aboutDTO) {
-        log.info("Обновление записи 'О нас' с ID: {}", id);
+    public AboutDTO update(AboutDTO aboutDTO) {
+        log.info("Обновление записи 'О нас'");
 
-        return aboutRepository.findById(id)
+        return getAbout()
                 .map(existingAbout -> {
                     if (aboutDTO.name() != null && !aboutDTO.name().isEmpty()) {
                         existingAbout.setName(aboutDTO.name());
@@ -61,19 +69,16 @@ public class AboutService {
                     }
 
                     aboutRepository.save(existingAbout);
-                    log.info("Запись 'О нас' с ID {} успешно обновлена", id);
+                    log.info("Запись 'О нас' успешно обновлена");
                     return aboutMapper.aboutToAboutDTO(existingAbout);
                 })
-                .orElseThrow(() -> new ResourceNotFoundException("О нас", id));
+                .orElseThrow(() -> new ResourceNotFoundException("Нет записи О нас"));
     }
 
     @Transactional
-    public void delete(Long id) {
-        log.info("Удаление записи 'О нас' с ID: {}", id);
-        if (!aboutRepository.existsById(id)) {
-            throw new ResourceNotFoundException("О нас", id);
-        }
-        aboutRepository.deleteById(id);
-        log.info("Запись 'О нас' с ID {} успешно удалена", id);
+    public void delete() {
+        log.info("Удаление записи 'О нас'");
+        aboutRepository.deleteAll();
+        log.info("Запись 'О нас' успешно удалена");
     }
 }
