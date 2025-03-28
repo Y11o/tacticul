@@ -15,7 +15,7 @@ public class SocialMediaMapperTest {
 
     @Test
     void testSocialMediaToSocialMediaDTO() {
-        Media media = Media.builder().id(1L).fileName("logo.png").build();
+        Media media = Media.builder().id(1L).url("logo.png").build();
         SocialMedia socialMedia = SocialMedia.builder()
                 .id(1L)
                 .name("Test Social Media")

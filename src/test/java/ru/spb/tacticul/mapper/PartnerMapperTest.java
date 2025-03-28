@@ -15,7 +15,7 @@ public class PartnerMapperTest {
 
     @Test
     void testPartnerToPartnerDTO() {
-        Media media = Media.builder().id(1L).fileName("logo.png").build();
+        Media media = Media.builder().id(1L).url("logo.png").build();
         Partner partner = Partner.builder()
                 .id(1L)
                 .name("Test Partner")

@@ -7,7 +7,7 @@ import java.util.List;
 @Builder
 public record SummaryDTO(
 
-        List<AboutDTO> about,
+        AboutDTO about,
 
         List<EventForSummaryDTO> events,
 

@@ -96,12 +96,12 @@ public class MediaService {
     public MediaDTO save(MultipartFile file){
         saveImage(file);
         Media media = mediaRepository.save(Media.builder()
-                .fileName(String.format("http://%s:%s/uploads/%s", IP, PORT, file.getOriginalFilename()))
+                .url(String.format("http://%s:%s/uploads/%s", IP, PORT, file.getOriginalFilename()))
                 .build());
 
         return MediaDTO.builder()
                 .id(media.getId())
-                .url(media.getFileName())
+                .url(media.getUrl())
                 .build();
     }
 
@@ -120,7 +120,7 @@ public class MediaService {
     public void delete(Long id){
         Media media = mediaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Изображение", id));
-        File file = new File(UPLOAD_DIR + media.getFileName().substring(media.getFileName().lastIndexOf('/') + 1));
+        File file = new File(UPLOAD_DIR + media.getUrl().substring(media.getUrl().lastIndexOf('/') + 1));
         try {
             Files.delete(file.toPath());
         } catch (IOException e) {
@@ -133,13 +133,13 @@ public class MediaService {
         saveImage(file);
         Media media = mediaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Изображение", id));
-        media.setFileName(String.format("http://%s:%s/uploads/%s", IP, PORT, file.getOriginalFilename()));
+        media.setUrl(String.format("http://%s:%s/uploads/%s", IP, PORT, file.getOriginalFilename()));
 
         mediaRepository.save(media);
 
         return MediaDTO.builder()
                 .id(media.getId())
-                .url(media.getFileName())
+                .url(media.getUrl())
                 .build();
     }
 

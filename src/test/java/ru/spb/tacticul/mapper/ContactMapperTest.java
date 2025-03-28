@@ -15,7 +15,7 @@ public class ContactMapperTest {
 
     @Test
     void testContactToContactDTO() {
-        Media media = Media.builder().id(1L).fileName("logo.png").build();
+        Media media = Media.builder().id(1L).url("logo.png").build();
         Contact contact = Contact.builder()
                 .id(1L)
                 .name("Test Contact")

@@ -27,15 +27,9 @@ public class InProgressController {
     private final InProgressService inProgressService;
 
     @GetMapping
-    @Operation(summary = "Получить все записи")
-    public ResponseEntity<List<InProgressDTO>> getAll() {
+    @Operation(summary = "Получить запись")
+    public ResponseEntity<InProgressDTO> getById() {
         return ResponseEntity.ok(inProgressService.getAll());
-    }
-
-    @GetMapping("/{id}")
-    @Operation(summary = "Получить запись по ID")
-    public ResponseEntity<InProgressDTO> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(inProgressService.getById(id));
     }
 
     @PostMapping
@@ -44,16 +38,16 @@ public class InProgressController {
         return ResponseEntity.status(HttpStatus.CREATED).body(inProgressService.create(inProgressDTO));
     }
 
-    @PutMapping("/{id}")
-    @Operation(summary = "Обновить запись по ID")
-    public ResponseEntity<InProgressDTO> update(@PathVariable Long id, @Valid @RequestBody InProgressDTO inProgressDTO) {
-        return ResponseEntity.ok(inProgressService.update(id, inProgressDTO));
+    @PutMapping
+    @Operation(summary = "Обновить запись")
+    public ResponseEntity<InProgressDTO> update(@Valid @RequestBody InProgressDTO inProgressDTO) {
+        return ResponseEntity.ok(inProgressService.update(inProgressDTO));
     }
 
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Удалить запись по ID")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        inProgressService.delete(id);
+    @DeleteMapping
+    @Operation(summary = "Удалить запись")
+    public ResponseEntity<Void> delete() {
+        inProgressService.delete();
         return ResponseEntity.noContent().build();
     }
 }
