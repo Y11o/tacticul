@@ -26,10 +26,10 @@ public class Event {
     @Column(columnDefinition = "TEXT")
     private String longDescription;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Media logo;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Media img;
 
     @Column

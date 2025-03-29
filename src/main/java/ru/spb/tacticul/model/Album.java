@@ -23,10 +23,10 @@ public class Album {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Media logo;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Media backgroundImage;
 
     private String url;

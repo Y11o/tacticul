@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ru.spb.tacticul.dto.MediaDTO;
 import ru.spb.tacticul.exception.ResourceNotFoundException;
@@ -143,7 +144,8 @@ public class MediaService {
                 .build();
     }
 
-    @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(fixedDelay = 60, timeUnit = TimeUnit.SECONDS)
+    @Transactional
     public void deleteUnusedImages(){
 
         List<Media> medias = mediaRepository.findAll().stream()

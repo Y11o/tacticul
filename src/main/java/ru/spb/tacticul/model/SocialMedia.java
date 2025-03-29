@@ -35,7 +35,7 @@ public class SocialMedia {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Media logo;
 
     private String url;
