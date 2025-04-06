@@ -66,6 +66,7 @@ public class SecurityConfig {
                                 "/webjars/**",
                                 "/uploads/**"
                         ).permitAll()
+                        .requestMatchers("/api/uploads/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
