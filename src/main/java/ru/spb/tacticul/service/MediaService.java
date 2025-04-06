@@ -74,13 +74,18 @@ public class MediaService {
             throw new IllegalArgumentException(String.format("Размер файла не должен превышать %s МB.", PHOTO_MAX_SIZE / (1024 * 1024)));
         }
 
+        log.info("Сохраняем файл в " + UPLOAD_DIR);
+
         Path dirPath = Paths.get(UPLOAD_DIR);
         File dir = dirPath.toFile();
         if (!dir.exists()) {
             dir.mkdirs();
         }
 
+        log.info(dirPath.toString());
+
         Path filePath = dirPath.resolve(file.getOriginalFilename());
+        log.info("Путь к файлу: " + filePath);
         try (InputStream inputStream = file.getInputStream();
              OutputStream outputStream = Files.newOutputStream(filePath)) {
             byte[] buffer = new byte[PHOTO_MAX_SIZE];
@@ -89,6 +94,7 @@ public class MediaService {
                 outputStream.write(buffer, 0, bytesRead);
             }
         } catch (IOException e) {
+            log.error("Файл не сохранён");
             log.error(e.getMessage());
         }
 
