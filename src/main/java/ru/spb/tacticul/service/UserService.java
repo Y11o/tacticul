@@ -49,7 +49,7 @@ public class UserService {
                         existingUser.setEmail(userDTO.email());
                     }
                     if (userDTO.password() != null && !userDTO.password().isEmpty()){
-                        existingUser.setPassword(passwordEncoder.encode(existingUser.getPassword()));
+                        existingUser.setPassword(passwordEncoder.encode(userDTO.password()));
                     }
                     userRepository.save(existingUser);
                     log.info("Пользователь с ID {} обновлён", id);
