@@ -68,10 +68,13 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .requiresChannel(channel -> channel
-                        .anyRequest().requiresSecure()
-                );
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        if ("prod".equals(System.getenv("ACTIVE_PROFILE"))) {
+            http.requiresChannel(channel -> channel
+                    .anyRequest().requiresSecure()
+            );
+        }
 
         return http.build();
     }
