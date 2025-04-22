@@ -29,7 +29,7 @@ services:
       RECOVERY_MAIL: ${RECOVERY_MAIL}
       RECOVERY_PASSWORD: ${RECOVERY_PASSWORD}
     volumes:
-      - tacticul-static:/app/src/main/resources/static
+      - tacticul-static:/app/static
       - maven-repo:/root/.m2/repository
 
   service-db:
