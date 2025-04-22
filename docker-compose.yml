@@ -30,6 +30,7 @@ services:
       RECOVERY_PASSWORD: ${RECOVERY_PASSWORD}
     volumes:
       - tacticul-static:/app/src/main/resources/static
+      - maven-repo:/root/.m2/repository
 
   service-db:
     container_name: "service-db"
