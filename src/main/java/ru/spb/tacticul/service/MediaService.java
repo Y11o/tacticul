@@ -104,7 +104,7 @@ public class MediaService {
     public MediaDTO save(MultipartFile file){
         saveImage(file);
         Media media = mediaRepository.save(Media.builder()
-                .url(String.format("http://%s:%s/api/%s", IP, PORT, file.getOriginalFilename()))
+                .url(String.format("http://%s/api/%s", IP, file.getOriginalFilename()))
                 .build());
 
         return MediaDTO.builder()
@@ -144,7 +144,7 @@ public class MediaService {
         saveImage(file);
         Media media = mediaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Изображение", id));
-        media.setUrl(String.format("http://%s:%s/api/%s", IP, PORT, file.getOriginalFilename()));
+        media.setUrl(String.format("http://%s/api/%s", IP, file.getOriginalFilename()));
 
         mediaRepository.save(media);
 
