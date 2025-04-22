@@ -1,9 +1,8 @@
 package ru.spb.tacticul.repository;
 
-import org.springframework.stereotype.Repository;
-import ru.spb.tacticul.model.Album;
-import ru.spb.tacticul.model.SocialMedia;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import ru.spb.tacticul.model.SocialMedia;
 
 import java.util.Optional;
 

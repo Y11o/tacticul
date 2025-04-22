@@ -1,14 +1,14 @@
 package ru.spb.tacticul.service;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 import ru.spb.tacticul.dto.UserDTO;
 import ru.spb.tacticul.exception.ResourceNotFoundException;
 import ru.spb.tacticul.mapper.UserMapper;
 import ru.spb.tacticul.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;

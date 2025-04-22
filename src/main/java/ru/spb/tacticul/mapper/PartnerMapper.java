@@ -1,8 +1,8 @@
 package ru.spb.tacticul.mapper;
 
+import org.mapstruct.Mapper;
 import ru.spb.tacticul.dto.PartnerDTO;
 import ru.spb.tacticul.model.Partner;
-import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface PartnerMapper {

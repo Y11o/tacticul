@@ -4,11 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.spb.tacticul.dto.AlbumDTO;
 import ru.spb.tacticul.dto.EventForSummaryDTO;
-import ru.spb.tacticul.dto.GalleryDTO;
-import ru.spb.tacticul.dto.MediaDTO;
 import ru.spb.tacticul.dto.MediaForSummaryDTO;
 import ru.spb.tacticul.dto.SummaryDTO;
-import ru.spb.tacticul.repository.AlbumRepository;
 
 import java.util.stream.Collectors;
 

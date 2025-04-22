@@ -19,9 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import ru.spb.tacticul.service.CustomUserDetailsService;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Configuration
 @EnableScheduling
@@ -54,7 +52,6 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/in-progress").permitAll()
@@ -68,7 +65,13 @@ public class SecurityConfig {
                         .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .requiresChannel(channel -> channel
+                        .anyRequest().requiresSecure()
+                );
 
         return http.build();
     }
@@ -77,10 +80,6 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOriginPatterns(List.of(
-                "http://62.109.21.99",
-                "http://тактикул.рф",
-                "http://xn--80af0a0aqe.xn--p1ai",
-                "http://xn--80aqfbf1bck.xn--p1ai",
                 "https://тактикул.рф",
                 "https://xn--80af0a0aqe.xn--p1ai",
                 "https://xn--80aqfbf1bck.xn--p1ai",

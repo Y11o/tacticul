@@ -29,7 +29,7 @@ public class SwaggerConfig {
                         .description("API для управления контентом сайта Тактикул")
                         .license(new License().name("Apache 2.0")))
                 .servers(List.of(
-                        new Server().url("http://xn--80aqfbf1bck.xn--p1ai/api")
+                        new Server().url("https://xn--80aqfbf1bck.xn--p1ai/api")
                 ));
     }
 }

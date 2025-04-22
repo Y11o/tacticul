@@ -11,9 +11,7 @@ import ru.spb.tacticul.mapper.MediaMapper;
 import ru.spb.tacticul.model.About;
 import ru.spb.tacticul.repository.AboutRepository;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

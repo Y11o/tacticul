@@ -1,13 +1,5 @@
 package ru.spb.tacticul.service;
 
-import ru.spb.tacticul.dto.authentication.RecoveryRequest;
-import ru.spb.tacticul.dto.authentication.SignInRequest;
-import ru.spb.tacticul.dto.authentication.SignUpRequest;
-import ru.spb.tacticul.dto.authentication.TokenResponse;
-import ru.spb.tacticul.exception.ResourceNotFoundException;
-import ru.spb.tacticul.model.User;
-import ru.spb.tacticul.repository.UserRepository;
-import ru.spb.tacticul.config.JwtUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +7,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.spb.tacticul.config.JwtUtil;
+import ru.spb.tacticul.dto.authentication.RecoveryRequest;
+import ru.spb.tacticul.dto.authentication.SignInRequest;
+import ru.spb.tacticul.dto.authentication.SignUpRequest;
+import ru.spb.tacticul.dto.authentication.TokenResponse;
+import ru.spb.tacticul.exception.ResourceNotFoundException;
+import ru.spb.tacticul.model.User;
+import ru.spb.tacticul.repository.UserRepository;
 import ru.spb.tacticul.service.email.EmailService;
 
 import java.util.Optional;

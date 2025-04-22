@@ -74,16 +74,12 @@ public class MediaService {
             throw new IllegalArgumentException(String.format("Размер файла не должен превышать %s МB.", PHOTO_MAX_SIZE / (1024 * 1024)));
         }
 
-        log.info("Сохраняем файл в " + UPLOAD_DIR);
-
         Path dirPath = Paths.get(UPLOAD_DIR);
         File dir = dirPath.toFile();
         if (!dir.exists()) {
             boolean created = dir.mkdirs();
             log.info("Директория создана: " + created);
         }
-
-        log.info("Абсолютный путь к директории: " + dir.getAbsolutePath());
 
         Path filePath = dirPath.resolve(file.getOriginalFilename());
         log.info("Полный путь к файлу: " + filePath.toAbsolutePath());
@@ -104,7 +100,7 @@ public class MediaService {
     public MediaDTO save(MultipartFile file){
         saveImage(file);
         Media media = mediaRepository.save(Media.builder()
-                .url(String.format("http://%s/api/%s", IP, file.getOriginalFilename()))
+                .url(String.format("https://%s/api/%s", IP, file.getOriginalFilename()))
                 .build());
 
         return MediaDTO.builder()
@@ -130,7 +126,7 @@ public class MediaService {
                 .orElseThrow(() -> new ResourceNotFoundException("Изображение", id));
         String fileName = media.getUrl().substring(media.getUrl().lastIndexOf('/') + 1);
         Path filePath = Paths.get(UPLOAD_DIR, fileName);
-        log.info("Пытаемся удалить файл: " + filePath.toAbsolutePath());
+        log.info("Удаление файла: " + filePath.toAbsolutePath());
         try {
             boolean deleted = Files.deleteIfExists(filePath);
             log.info("Файл удален: " + deleted);
@@ -144,7 +140,7 @@ public class MediaService {
         saveImage(file);
         Media media = mediaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Изображение", id));
-        media.setUrl(String.format("http://%s/api/%s", IP, file.getOriginalFilename()));
+        media.setUrl(String.format("https://%s/api/%s", IP, file.getOriginalFilename()));
 
         mediaRepository.save(media);
 
