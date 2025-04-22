@@ -83,9 +83,9 @@ public class SecurityConfig {
                 "https://тактикул.рф",
                 "https://xn--80af0a0aqe.xn--p1ai",
                 "https://xn--80aqfbf1bck.xn--p1ai",
-                "http://localhost",
-                "http://localhost:8080",
-                "http://127.0.0.1"
+                "https://localhost",
+                "https://localhost:8080",
+                "https://127.0.0.1"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"));
         config.setAllowedHeaders(List.of("*"));
