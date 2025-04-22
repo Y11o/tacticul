@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - MAVEN_OPTS=-Dmaven.repo.local=/root/.m2/repository
     ports:
       - "8080:8080"
     depends_on:
@@ -26,6 +28,8 @@ services:
       SERVER_PORT: ${SERVER_PORT}
       RECOVERY_MAIL: ${RECOVERY_MAIL}
       RECOVERY_PASSWORD: ${RECOVERY_PASSWORD}
+    volumes:
+      - tacticul-static:/app/src/main/resources/static
 
   service-db:
     container_name: "service-db"
@@ -53,3 +57,5 @@ services:
 
 volumes:
   tacticul-service-db:
+  tacticul-static:
+  maven-repo:
