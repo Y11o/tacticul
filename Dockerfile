@@ -19,9 +19,8 @@ FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=builder /app/target/*.jar /app/*.jar
 
-# Установка Python и зависимостей
-RUN apk add --no-cache python3 py3-pip && \
-    pip3 install requests
+# Установка Python и requests через apk
+RUN apk add --no-cache python3 py3-requests
 
 # Создаем директории для статических файлов и скриптов
 RUN mkdir -p /app/static && \
