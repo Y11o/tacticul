@@ -11,12 +11,16 @@ import ru.spb.tacticul.config.JwtUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.spb.tacticul.service.email.EmailService;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,6 +34,9 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+
+    @Value("${app.reset-password.script-path}")
+    private String resetPasswordScriptPath;
 
     @Transactional
     public TokenResponse signUp(SignUpRequest request) {
@@ -73,12 +80,41 @@ public class AuthenticationService {
                 .orElseThrow(() -> new ResourceNotFoundException("Пользователь с таким email: " +
                         request.email() +  " не найден"));
 
+        if (user.getTelegramId() == null) {
+            throw new IllegalStateException("У пользователя не задан Telegram ID для восстановления пароля");
+        }
+
         String newPassword = generateRandomPassword();
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
 
-        emailService.sendRecoveryEmail(user.getEmail(), user.getLogin(), newPassword);
-        log.info("Новый пароль отправлен пользователю: {}", user.getLogin());
+        Path scriptPath = Paths.get(resetPasswordScriptPath).toAbsolutePath();
+        if (!scriptPath.toFile().exists()) {
+            log.error("Скрипт восстановления пароля не найден по пути: {}", scriptPath);
+            throw new RuntimeException("Скрипт восстановления пароля не найден");
+        }
+
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder(
+                    "python3",
+                    scriptPath.toString(),
+                    user.getTelegramId().toString(),
+                    newPassword
+            );
+            
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+            
+            if (exitCode != 0) {
+                log.error("Ошибка при выполнении скрипта resetpassword.py. Код выхода: {}", exitCode);
+                throw new RuntimeException("Ошибка при сбросе пароля через Telegram");
+            }
+            
+            log.info("Пароль успешно сброшен через Telegram для пользователя: {}", user.getLogin());
+        } catch (IOException | InterruptedException e) {
+            log.error("Ошибка при выполнении скрипта resetpassword.py", e);
+            throw new RuntimeException("Ошибка при сбросе пароля через Telegram", e);
+        }
     }
 
     private String generateRandomPassword() {

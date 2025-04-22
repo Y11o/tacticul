@@ -28,6 +28,7 @@ services:
       SERVER_PORT: ${SERVER_PORT}
       RECOVERY_MAIL: ${RECOVERY_MAIL}
       RECOVERY_PASSWORD: ${RECOVERY_PASSWORD}
+      RESET_PASSWORD_SCRIPT_PATH: ${RESET_PASSWORD_SCRIPT_PATH}
     volumes:
       - tacticul-static:/app/static
       - maven-repo:/root/.m2/repository
