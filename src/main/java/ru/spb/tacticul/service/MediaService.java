@@ -70,8 +70,11 @@ public class MediaService {
             throw new IllegalArgumentException("Тип файла " + contentType + " не поддерживается. Возможные типы: " + String.join(", ", allowedTypes));
         }
 
-        if (file.getSize() > PHOTO_MAX_SIZE) {
-            throw new IllegalArgumentException(String.format("Размер файла не должен превышать %s МB.", PHOTO_MAX_SIZE / (1024 * 1024)));
+        long maxSizeInBytes = PHOTO_MAX_SIZE;
+        long maxSizeInMB = maxSizeInBytes / (1024 * 1024);
+
+        if (file.getSize() > maxSizeInBytes) {
+            throw new IllegalArgumentException(String.format("Размер файла не должен превышать %d МB.", maxSizeInMB));
         }
 
         log.info("Сохраняем файл в " + UPLOAD_DIR);
