@@ -47,7 +47,7 @@ public class MediaService {
     private final SocialMediaRepository socialMediaRepository;
 
     @Value("${photo_size}")
-    private int PHOTO_MAX_SIZE;
+    private long PHOTO_MAX_SIZE;
 
     @Value("${upload_dir}")
     private String UPLOAD_DIR;
@@ -92,7 +92,7 @@ public class MediaService {
         log.info("Полный путь к файлу: " + filePath.toAbsolutePath());
         try (InputStream inputStream = file.getInputStream();
              OutputStream outputStream = Files.newOutputStream(filePath)) {
-            byte[] buffer = new byte[PHOTO_MAX_SIZE];
+            byte[] buffer = new byte[8192];
             int bytesRead;
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
