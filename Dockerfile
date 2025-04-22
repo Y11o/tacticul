@@ -7,11 +7,13 @@ RUN mkdir -p /root/.m2/repository
 # Копируем только pom.xml для кэширования зависимостей
 WORKDIR /app
 COPY pom.xml .
-RUN mvn dependency:go-offline ${MAVEN_OPTS}
+RUN mvn dependency:go-offline -B
 
-# Копируем исходный код и собираем проект
-COPY . .
-RUN mvn -f /app/pom.xml clean package -Dmaven.test.skip=true ${MAVEN_OPTS}
+# Копируем исходный код
+COPY src ./src
+
+# Собираем проект
+RUN mvn clean package -Dmaven.test.skip=true -B
 
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
