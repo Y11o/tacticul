@@ -79,13 +79,14 @@ public class MediaService {
         Path dirPath = Paths.get(UPLOAD_DIR);
         File dir = dirPath.toFile();
         if (!dir.exists()) {
-            dir.mkdirs();
+            boolean created = dir.mkdirs();
+            log.info("Директория создана: " + created);
         }
 
-        log.info(dirPath.toString());
+        log.info("Абсолютный путь к директории: " + dir.getAbsolutePath());
 
         Path filePath = dirPath.resolve(file.getOriginalFilename());
-        log.info("Путь к файлу: " + filePath);
+        log.info("Полный путь к файлу: " + filePath.toAbsolutePath());
         try (InputStream inputStream = file.getInputStream();
              OutputStream outputStream = Files.newOutputStream(filePath)) {
             byte[] buffer = new byte[PHOTO_MAX_SIZE];
@@ -93,11 +94,11 @@ public class MediaService {
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
             }
+            log.info("Файл успешно сохранен: " + filePath.toAbsolutePath());
         } catch (IOException e) {
-            log.error("Файл не сохранён");
-            log.error(e.getMessage());
+            log.error("Ошибка при сохранении файла", e);
+            throw new RuntimeException("Не удалось сохранить файл", e);
         }
-
     }
 
     public MediaDTO save(MultipartFile file){
@@ -127,11 +128,14 @@ public class MediaService {
     public void delete(Long id){
         Media media = mediaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Изображение", id));
-        File file = new File(UPLOAD_DIR + media.getUrl().substring(media.getUrl().lastIndexOf('/') + 1));
+        String fileName = media.getUrl().substring(media.getUrl().lastIndexOf('/') + 1);
+        Path filePath = Paths.get(UPLOAD_DIR, fileName);
+        log.info("Пытаемся удалить файл: " + filePath.toAbsolutePath());
         try {
-            Files.delete(file.toPath());
+            boolean deleted = Files.deleteIfExists(filePath);
+            log.info("Файл удален: " + deleted);
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error("Ошибка при удалении файла", e);
         }
         mediaRepository.deleteById(id);
     }
