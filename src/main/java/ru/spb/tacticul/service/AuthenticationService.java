@@ -48,6 +48,7 @@ public class AuthenticationService {
         user.setLogin(request.login());
         user.setEmail(request.email());
         user.setPassword(passwordEncoder.encode(request.password()));
+        user.setTelegramId(request.telegramId());
         userRepository.save(user);
 
         log.info("Пользователь {} успешно зарегистрирован", request.login());
