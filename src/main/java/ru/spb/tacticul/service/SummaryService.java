@@ -50,7 +50,7 @@ public class SummaryService {
                                         .logo(album.logo())
                                         .name(album.name())
                                         .description(album.description())
-                                        .background(albumService.getAll().stream().findAny().get().background())
+                                        .backgroundImage(albumService.getAll().stream().findAny().get().backgroundImage())
                                         .build())
                                 .collect(Collectors.toList())
                         )
