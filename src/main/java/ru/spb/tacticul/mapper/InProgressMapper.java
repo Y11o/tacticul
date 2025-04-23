@@ -1,7 +1,7 @@
 package ru.spb.tacticul.mapper;
 
-import ru.spb.tacticul.dto.InProgressDTO;
 import org.mapstruct.Mapper;
+import ru.spb.tacticul.dto.InProgressDTO;
 import ru.spb.tacticul.model.InProgress;
 
 @Mapper(componentModel = "spring")

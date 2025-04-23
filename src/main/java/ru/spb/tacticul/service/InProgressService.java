@@ -10,9 +10,7 @@ import ru.spb.tacticul.mapper.InProgressMapper;
 import ru.spb.tacticul.model.InProgress;
 import ru.spb.tacticul.repository.InProgressRepository;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

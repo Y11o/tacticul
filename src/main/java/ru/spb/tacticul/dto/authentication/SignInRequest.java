@@ -1,7 +1,6 @@
 package ru.spb.tacticul.dto.authentication;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
 @Builder

@@ -1,8 +1,8 @@
 package ru.spb.tacticul.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.spb.tacticul.model.Contact;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
