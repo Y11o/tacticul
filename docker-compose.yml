@@ -29,6 +29,7 @@ services:
       RECOVERY_MAIL: ${RECOVERY_MAIL}
       RECOVERY_PASSWORD: ${RECOVERY_PASSWORD}
       RESET_PASSWORD_SCRIPT_PATH: ${RESET_PASSWORD_SCRIPT_PATH}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
     volumes:
       - tacticul-static:/app/static
       - maven-repo:/root/.m2/repository
