@@ -62,8 +62,8 @@ public class AlbumService {
                     if (albumDTO.logo() != null) {
                         existingAlbum.setLogo(mediaMapper.mediaDTOToMedia(albumDTO.logo()));
                     }
-                    if (albumDTO.backgroundImage() != null) {
-                        existingAlbum.setBackgroundImage(mediaMapper.mediaDTOToMedia(albumDTO.backgroundImage()));
+                    if (albumDTO.background() != null) {
+                        existingAlbum.setBackgroundImage(mediaMapper.mediaDTOToMedia(albumDTO.background()));
                     }
                     if (albumDTO.url() != null) {
                         existingAlbum.setUrl(albumDTO.url());
