@@ -18,5 +18,7 @@ public record SignUpRequest(
 
         @NotBlank(message = "Пароль не может быть пустым")
         @Size(min = 8, message = "Пароль должен содержать минимум 8 символов")
-        String password) {
+        String password,
+
+        Long telegramId) {
 }
