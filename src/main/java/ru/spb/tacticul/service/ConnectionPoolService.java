@@ -22,7 +22,7 @@ public class ConnectionPoolService {
         if (dataSource instanceof HikariDataSource) {
             HikariDataSource hikariDataSource = (HikariDataSource) dataSource;
             log.info("Обновление соединений в пуле. Активных соединений: {}", hikariDataSource.getHikariPoolMXBean().getActiveConnections());
-            
+
             try (Connection connection = hikariDataSource.getConnection()) {
                 // Просто открываем и закрываем соединение для обновления пула
                 log.info("Соединение успешно обновлено");
@@ -31,4 +31,4 @@ public class ConnectionPoolService {
             }
         }
     }
-} 
+}

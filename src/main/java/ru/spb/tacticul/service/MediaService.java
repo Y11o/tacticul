@@ -47,7 +47,7 @@ public class MediaService {
     private final SocialMediaRepository socialMediaRepository;
 
     @Value("${photo_size}")
-    private int PHOTO_MAX_SIZE;
+    private long PHOTO_MAX_SIZE;
 
     @Value("${upload_dir}")
     private String UPLOAD_DIR;
@@ -72,10 +72,12 @@ public class MediaService {
 
         long maxSizeInBytes = PHOTO_MAX_SIZE;
         long maxSizeInMB = maxSizeInBytes / (1024 * 1024);
-        
+
         if (file.getSize() > maxSizeInBytes) {
             throw new IllegalArgumentException(String.format("Размер файла не должен превышать %d МB.", maxSizeInMB));
         }
+
+        log.info("Сохраняем файл в " + UPLOAD_DIR);
 
         Path dirPath = Paths.get(UPLOAD_DIR);
         File dir = dirPath.toFile();
@@ -84,11 +86,13 @@ public class MediaService {
             log.info("Директория создана: " + created);
         }
 
+        log.info("Абсолютный путь к директории: " + dir.getAbsolutePath());
+
         Path filePath = dirPath.resolve(file.getOriginalFilename());
         log.info("Полный путь к файлу: " + filePath.toAbsolutePath());
         try (InputStream inputStream = file.getInputStream();
              OutputStream outputStream = Files.newOutputStream(filePath)) {
-            byte[] buffer = new byte[PHOTO_MAX_SIZE];
+            byte[] buffer = new byte[8192];
             int bytesRead;
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);

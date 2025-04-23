@@ -22,6 +22,9 @@ public class User {
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
+    @Column(name = "telegram_id")
+    private Long telegramId;
+
     @Column(nullable = false)
     private String password;
 }

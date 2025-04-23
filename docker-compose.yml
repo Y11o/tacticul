@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - MAVEN_OPTS=-Dmaven.repo.local=/root/.m2/repository
+        - MAVEN_OPTS=-Dmaven.repo.local=/root/.m2/repository -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
     ports:
       - "8080:8080"
     depends_on:
@@ -28,6 +28,7 @@ services:
       SERVER_PORT: ${SERVER_PORT}
       RECOVERY_MAIL: ${RECOVERY_MAIL}
       RECOVERY_PASSWORD: ${RECOVERY_PASSWORD}
+      RESET_PASSWORD_SCRIPT_PATH: ${RESET_PASSWORD_SCRIPT_PATH}
     volumes:
       - tacticul-static:/app/static
       - maven-repo:/root/.m2/repository
