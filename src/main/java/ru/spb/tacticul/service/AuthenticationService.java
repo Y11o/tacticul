@@ -16,7 +16,6 @@ import ru.spb.tacticul.dto.authentication.TokenResponse;
 import ru.spb.tacticul.exception.ResourceNotFoundException;
 import ru.spb.tacticul.model.User;
 import ru.spb.tacticul.repository.UserRepository;
-import ru.spb.tacticul.service.email.EmailService;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -33,7 +32,6 @@ public class AuthenticationService {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-    private final EmailService emailService;
 
     @Value("${app.reset-password.script-path}")
     private String resetPasswordScriptPath;
