@@ -58,6 +58,20 @@ services:
       - tacticul-service-db:/var/lib/postgresql/data
     restart: unless-stopped
 
+  trf-website_client:
+    build: ../trf_website
+    container_name: "website_client"
+    restart: always
+    ports:
+      - "8082:80"
+
+  tc-admin:
+    build: ../tc-admin-client
+    container_name: "tc-admin-client"
+    restart: always
+    ports:
+      - "8083:80"
+
 volumes:
   tacticul-service-db:
   tacticul-static:
