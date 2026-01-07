@@ -53,7 +53,7 @@ services:
       timeout: 3s
       retries: 3
     ports:
-      - "15432:5432"
+      - "127.0.0.1:15432:5432"
     volumes:
       - tacticul-service-db:/var/lib/postgresql/data
     restart: unless-stopped
